@@ -1,0 +1,112 @@
+// ========================================
+// API 請求函式
+// ========================================
+
+const axios = require('axios');
+const { API_PATH, BASE_URL, ADMIN_TOKEN } = require('./config');
+
+// ========== 客戶端 API ==========
+
+/**
+ * 取得產品列表
+ * @returns {Promise<Array>}
+ */
+async function fetchProducts() {
+  // 請實作此函式
+}
+
+/**
+ * 取得購物車
+ * @returns {Promise<Object>}
+ */
+async function fetchCart() {
+  // 請實作此函式
+}
+
+/**
+ * 加入購物車
+ * @param {string} productId - 產品 ID
+ * @param {number} quantity - 數量
+ * @returns {Promise<Object>}
+ */
+async function addToCart(productId, quantity) {
+  // 請實作此函式
+}
+
+/**
+ * 更新購物車商品數量
+ * @param {string} cartId - 購物車項目 ID
+ * @param {number} quantity - 新數量
+ * @returns {Promise<Object>}
+ */
+async function updateCartItem(cartId, quantity) {
+  // 請實作此函式
+}
+
+/**
+ * 刪除購物車商品
+ * @param {string} cartId - 購物車項目 ID
+ * @returns {Promise<Object>}
+ */
+async function deleteCartItem(cartId) {
+  // 請實作此函式
+}
+
+/**
+ * 清空購物車
+ * @returns {Promise<Object>}
+ */
+async function clearCart() {
+  // 請實作此函式
+}
+
+/**
+ * 建立訂單
+ * @param {Object} userInfo - 使用者資料
+ * @returns {Promise<Object>}
+ */
+async function createOrder(userInfo) {
+  // 請實作此函式
+}
+
+// ========== 管理員 API ==========
+
+/**
+ * 取得訂單列表（需認證）
+ * @returns {Promise<Array>}
+ */
+async function fetchOrders() {
+  // 請實作此函式
+}
+
+/**
+ * 更新訂單狀態
+ * @param {string} orderId - 訂單 ID
+ * @param {boolean} isPaid - 是否已付款
+ * @returns {Promise<Object>}
+ */
+async function updateOrderStatus(orderId, isPaid) {
+  // 請實作此函式
+}
+
+/**
+ * 刪除訂單
+ * @param {string} orderId - 訂單 ID
+ * @returns {Promise<Object>}
+ */
+async function deleteOrder(orderId) {
+  // 請實作此函式
+}
+
+module.exports = {
+  fetchProducts,
+  fetchCart,
+  addToCart,
+  updateCartItem,
+  deleteCartItem,
+  clearCart,
+  createOrder,
+  fetchOrders,
+  updateOrderStatus,
+  deleteOrder
+};
