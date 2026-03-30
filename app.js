@@ -67,21 +67,37 @@ async function main() {
     console.log(`總金額：${formatCurrency(total.total)}`);
     console.log(`折扣後：${formatCurrency(total.finalTotal)}`);
 
-    // 8. 查看訂單列表（管理員功能）
-    console.log('\n--- 步驟 8：訂單列表（管理員）---');
+    // 8. 送出訂單
+    console.log('\n--- 步驟 8：送出訂單 ---');
+    const userInfo = {
+      name: '王小明',
+      tel: '0912345678',
+      email: 'test@example.com',
+      address: '台北市信義區信義路五段7號',
+      payment: '信用卡'
+    };
+    const orderResult = await orderService.placeOrder(userInfo);
+    if (orderResult.success) {
+      console.log('訂單送出成功！');
+    } else {
+      console.log('訂單送出失敗：', orderResult.errors.join(', '));
+    }
+
+    // 9. 查看訂單列表（管理員功能）
+    console.log('\n--- 步驟 9：訂單列表（管理員）---');
     const orders = await orderService.getOrders();
     console.log(`共有 ${orders.length} 筆訂單`);
     if (orders.length > 0) {
       orderService.displayOrders(orders.slice(0, 2)); // 只顯示前 2 筆
     }
 
-    // 9. 篩選未付款訂單
-    console.log('\n--- 步驟 9：未付款訂單 ---');
+    // 10. 篩選未付款訂單
+    console.log('\n--- 步驟 10：未付款訂單 ---');
     const unpaidOrders = await orderService.getUnpaidOrders();
     console.log(`未付款訂單：${unpaidOrders.length} 筆`);
 
-    // 10. 篩選已付款訂單
-    console.log('\n--- 步驟 10：已付款訂單 ---');
+    // 11. 篩選已付款訂單
+    console.log('\n--- 步驟 11：已付款訂單 ---');
     const paidOrders = await orderService.getPaidOrders();
     console.log(`已付款訂單：${paidOrders.length} 筆`);
 
