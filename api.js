@@ -12,8 +12,12 @@ const { API_PATH, BASE_URL, ADMIN_TOKEN } = require('./config');
  * @returns {Promise<Array>}
  */
 async function fetchProducts() {
-  // 請實作此函式
-  // 回傳 response.data.products
+  try {
+    const res = await axios.get(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/products`)
+    return res.data.products
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 /**
@@ -21,7 +25,17 @@ async function fetchProducts() {
  * @returns {Promise<Object>} - 回傳 { carts: [...], total: 數字, finalTotal: 數字 }
  */
 async function fetchCart() {
-  // 請實作此函式
+  try {
+    const res = await axios.get(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`)
+    const { carts, total, finalTotal } = res.data
+    return {
+      carts,
+      total,
+      finalTotal,
+    }
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 /**
@@ -31,7 +45,16 @@ async function fetchCart() {
  * @returns {Promise<Object>} - 回傳購物車資料
  */
 async function addToCart(productId, quantity) {
-  // 請實作此函式
+  const payload = {
+    productId,
+    quantity
+  }
+  try {
+    const res = await axios.post(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`, { data: payload })
+    return res.data
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 /**
@@ -41,7 +64,16 @@ async function addToCart(productId, quantity) {
  * @returns {Promise<Object>} - 回傳購物車資料
  */
 async function updateCartItem(cartId, quantity) {
-  // 請實作此函式
+  const payload = {
+    cartId,
+    quantity
+  }
+  try {
+    const res = await axios.patch(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`, { data: payload })
+    return res.data
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 /**
@@ -50,7 +82,12 @@ async function updateCartItem(cartId, quantity) {
  * @returns {Promise<Object>} - 回傳購物車資料
  */
 async function deleteCartItem(cartId) {
-  // 請實作此函式
+  try {
+    const res = await axios.delete(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts/${cartId}`)
+    return res.data
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 /**
@@ -58,7 +95,12 @@ async function deleteCartItem(cartId) {
  * @returns {Promise<Object>} - 回傳購物車資料
  */
 async function clearCart() {
-  // 請實作此函式
+  try {
+    const res = await axios.delete(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`)
+    return res.data
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 /**
@@ -67,7 +109,13 @@ async function clearCart() {
  * @returns {Promise<Object>}
  */
 async function createOrder(userInfo) {
-  // 請實作此函式
+  const payload = { user: userInfo }
+  try {
+    const res = await axios.post(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/orders`, { data: payload })
+    return res.data
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 // ========== 管理員 API ==========
@@ -85,7 +133,16 @@ async function createOrder(userInfo) {
  * @returns {Promise<Array>}
  */
 async function fetchOrders() {
-  // 請實作此函式
+  try {
+    const res = await axios.get(`${BASE_URL}/api/livejs/v1/admin/${API_PATH}/orders`, {
+      headers: {
+        authorization: ADMIN_TOKEN
+      }
+     })
+    return res.data.orders
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 /**
@@ -95,7 +152,22 @@ async function fetchOrders() {
  * @returns {Promise<Object>}
  */
 async function updateOrderStatus(orderId, isPaid) {
-  // 請實作此函式
+  const payload = { id:orderId, paid:isPaid }
+  try {
+    const res = await axios.put(`${BASE_URL}/api/livejs/v1/admin/${API_PATH}/orders`,
+      {
+        data: payload,
+      },
+      {
+        headers: {
+          authorization: ADMIN_TOKEN
+        }
+      }
+    )
+    return res.data
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 /**
@@ -104,7 +176,17 @@ async function updateOrderStatus(orderId, isPaid) {
  * @returns {Promise<Object>}
  */
 async function deleteOrder(orderId) {
-  // 請實作此函式
+  console.log(orderId)
+  try {
+    const res = await axios.delete(`${BASE_URL}/api/livejs/v1/admin/${API_PATH}/orders/${orderId}`, {
+      headers: {
+        authorization: ADMIN_TOKEN
+      }
+    })
+    return res.data
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 module.exports = {
