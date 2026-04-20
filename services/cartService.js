@@ -166,23 +166,14 @@ function displayCart(cart) {
   console.log(`購物車內容：\n----------------------------------------`)
 
   cart.carts.forEach((item, index) => {
-    console.log(`
-      ${index+1}: ${item.product.title}\n
-      ${" ".repeat(4)}數量: ${item.quantity}\n
-      ${" ".repeat(4)}單價: ${formatCurrency(item.product.price)}\n
-      ${" ".repeat(4)}小計: ${formatCurrency(item.product.price*item.quantity)}
-    `)
+    console.log(`${index+1}: ${item.product.title}\n${" ".repeat(4)}數量: ${item.quantity}\n${" ".repeat(4)}單價: ${formatCurrency(item.product.price)}\n${" ".repeat(4)}小計: ${formatCurrency(item.product.price*item.quantity)}`)
 
     if(index < cart.carts.length-1){
       console.log(`----------------------------------------\n`)
     }
   })
 
-  console.log(`
-    ----------------------------------------\n
-    商品總計: ${formatCurrency(cart.total)}\n
-    折扣後金額: ${formatCurrency(cart.finalTotal)}
-  `)
+  console.log(`----------------------------------------\n商品總計: ${formatCurrency(cart.total)}\n折扣後金額: ${formatCurrency(cart.finalTotal)}`)
 }
 
 module.exports = {
