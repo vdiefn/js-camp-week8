@@ -176,7 +176,6 @@ async function updateOrderStatus(orderId, isPaid) {
  * @returns {Promise<Object>}
  */
 async function deleteOrder(orderId) {
-  console.log(orderId)
   try {
     const res = await axios.delete(`${BASE_URL}/api/livejs/v1/admin/${API_PATH}/orders/${orderId}`, {
       headers: {
