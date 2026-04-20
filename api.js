@@ -12,12 +12,9 @@ const { API_PATH, BASE_URL, ADMIN_TOKEN } = require('./config');
  * @returns {Promise<Array>}
  */
 async function fetchProducts() {
-  try {
-    const res = await axios.get(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/products`)
-    return res.data.products
-  } catch (error) {
-    console.error(error)
-  }
+  const res = await axios.get(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/products`)
+
+  return res.data.products
 }
 
 /**
@@ -25,16 +22,14 @@ async function fetchProducts() {
  * @returns {Promise<Object>} - 回傳 { carts: [...], total: 數字, finalTotal: 數字 }
  */
 async function fetchCart() {
-  try {
-    const res = await axios.get(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`)
-    const { carts, total, finalTotal } = res.data
-    return {
-      carts,
-      total,
-      finalTotal,
-    }
-  } catch (error) {
-    console.error(error)
+  const res = await axios.get(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`)
+
+  const { carts, total, finalTotal } = res.data
+
+  return {
+    carts,
+    total,
+    finalTotal,
   }
 }
 
@@ -49,12 +44,10 @@ async function addToCart(productId, quantity) {
     productId,
     quantity
   }
-  try {
-    const res = await axios.post(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`, { data: payload })
-    return res.data
-  } catch (error) {
-    console.error(error)
-  }
+
+  const res = await axios.post(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`, { data: payload })
+
+  return res.data
 }
 
 /**
@@ -68,12 +61,11 @@ async function updateCartItem(cartId, quantity) {
     cartId,
     quantity
   }
-  try {
-    const res = await axios.patch(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`, { data: payload })
-    return res.data
-  } catch (error) {
-    console.error(error)
-  }
+
+  const res = await axios.patch(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`, { data: payload })
+
+  return res.data
+
 }
 
 /**
@@ -82,12 +74,9 @@ async function updateCartItem(cartId, quantity) {
  * @returns {Promise<Object>} - 回傳購物車資料
  */
 async function deleteCartItem(cartId) {
-  try {
-    const res = await axios.delete(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts/${cartId}`)
-    return res.data
-  } catch (error) {
-    console.error(error)
-  }
+  const res = await axios.delete(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts/${cartId}`)
+
+  return res.data
 }
 
 /**
@@ -95,12 +84,9 @@ async function deleteCartItem(cartId) {
  * @returns {Promise<Object>} - 回傳購物車資料
  */
 async function clearCart() {
-  try {
-    const res = await axios.delete(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`)
-    return res.data
-  } catch (error) {
-    console.error(error)
-  }
+  const res = await axios.delete(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`)
+
+  return res.data
 }
 
 /**
@@ -110,12 +96,10 @@ async function clearCart() {
  */
 async function createOrder(userInfo) {
   const payload = { user: userInfo }
-  try {
-    const res = await axios.post(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/orders`, { data: payload })
-    return res.data
-  } catch (error) {
-    console.error(error)
-  }
+
+  const res = await axios.post(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/orders`, { data: payload })
+
+  return res.data
 }
 
 // ========== 管理員 API ==========
@@ -133,16 +117,12 @@ async function createOrder(userInfo) {
  * @returns {Promise<Array>}
  */
 async function fetchOrders() {
-  try {
-    const res = await axios.get(`${BASE_URL}/api/livejs/v1/admin/${API_PATH}/orders`, {
-      headers: {
-        authorization: ADMIN_TOKEN
-      }
-     })
-    return res.data.orders
-  } catch (error) {
-    console.error(error)
-  }
+  const res = await axios.get(`${BASE_URL}/api/livejs/v1/admin/${API_PATH}/orders`, {
+    headers: {
+      authorization: ADMIN_TOKEN
+    }
+  })
+  return res.data.orders
 }
 
 /**
@@ -153,21 +133,17 @@ async function fetchOrders() {
  */
 async function updateOrderStatus(orderId, isPaid) {
   const payload = { id:orderId, paid:isPaid }
-  try {
-    const res = await axios.put(`${BASE_URL}/api/livejs/v1/admin/${API_PATH}/orders`,
-      {
-        data: payload,
-      },
-      {
-        headers: {
-          authorization: ADMIN_TOKEN
-        }
+  const res = await axios.put(`${BASE_URL}/api/livejs/v1/admin/${API_PATH}/orders`,
+    {
+      data: payload,
+    },
+    {
+      headers: {
+        authorization: ADMIN_TOKEN
       }
-    )
-    return res.data
-  } catch (error) {
-    console.error(error)
-  }
+    }
+  )
+  return res.data
 }
 
 /**
@@ -176,16 +152,13 @@ async function updateOrderStatus(orderId, isPaid) {
  * @returns {Promise<Object>}
  */
 async function deleteOrder(orderId) {
-  try {
-    const res = await axios.delete(`${BASE_URL}/api/livejs/v1/admin/${API_PATH}/orders/${orderId}`, {
-      headers: {
-        authorization: ADMIN_TOKEN
-      }
-    })
-    return res.data
-  } catch (error) {
-    console.error(error)
-  }
+  const res = await axios.delete(`${BASE_URL}/api/livejs/v1/admin/${API_PATH}/orders/${orderId}`, {
+    headers: {
+      authorization: ADMIN_TOKEN
+    }
+  })
+  return res.data
+
 }
 
 module.exports = {
