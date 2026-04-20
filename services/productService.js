@@ -94,7 +94,12 @@ function displayProducts(products) {
     if(index === 0){
       console.log(`產品列表：\n----------------------------------------`)
     }
-    console.log(`${index+1}: ${item.title}\n${" ".repeat(4)}分類: ${item.category}\n${" ".repeat(4)}原價: ${formatCurrency(item.origin_price)}\n${" ".repeat(4)}售價: ${formatCurrency(item.price)} (${getDiscountRate(item)})\n----------------------------------------`)
+    console.log(`
+      ${index+1}: ${item.title}\n
+      ${" ".repeat(4)}分類: ${item.category}\n
+      ${" ".repeat(4)}原價: ${formatCurrency(item.origin_price)}\n
+      ${" ".repeat(4)}售價: ${formatCurrency(item.price)} (${getDiscountRate(item)})\n----------------------------------------
+    `)
   })
 }
 
