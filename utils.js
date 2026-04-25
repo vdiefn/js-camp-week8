@@ -2,7 +2,7 @@
 // 工具函式
 // ========================================
 
-const dayjs = require('dayjs');
+const dayjs = require("dayjs");
 
 /**
  * 計算產品折扣率
@@ -10,7 +10,7 @@ const dayjs = require('dayjs');
  * @returns {string} - 例如 '8折'
  */
 function getDiscountRate(product) {
-  return `${Math.round(((product.price / product.origin_price) *100) /10)}折`
+  return `${Math.round(((product.price / product.origin_price) * 100) / 10)}折`;
 }
 
 /**
@@ -19,8 +19,8 @@ function getDiscountRate(product) {
  * @returns {Array} - 分類陣列
  */
 function getAllCategories(products) {
-  const set = new Set(products.map((item) => item.category))
-  return [...set]
+  const set = new Set(products.map((item) => item.category));
+  return [...set];
 }
 
 /**
@@ -29,7 +29,7 @@ function getAllCategories(products) {
  * @returns {string} - 格式 'YYYY/MM/DD HH:mm'，例如 '2024/01/01 08:00'
  */
 function formatDate(timestamp) {
-  return dayjs.unix(timestamp).format("YYYY/MM/DD HH:mm")
+  return dayjs.unix(timestamp).format("YYYY/MM/DD HH:mm");
 }
 
 /**
@@ -38,9 +38,9 @@ function formatDate(timestamp) {
  * @returns {string} - 例如 '3 天前'
  */
 function getDaysAgo(timestamp) {
-  const current = dayjs()
-  const diff = current.diff(dayjs.unix(timestamp), "day")
-  return diff === 0? "今天":`${diff} 天前`
+  const current = dayjs();
+  const diff = current.diff(dayjs.unix(timestamp), "day");
+  return diff === 0 ? "今天" : `${diff} 天前`;
 }
 
 /**
@@ -56,27 +56,27 @@ function getDaysAgo(timestamp) {
  * - payment: 必須是 'ATM', 'Credit Card', 'Apple Pay' 其中之一
  */
 function validateOrderUser(data) {
-  const errors = []
-  if(!data.name || data.name.trim().length === 0){
-    errors.push("name 不可為空")
+  const errors = [];
+  if (!data.name || data.name.trim().length === 0) {
+    errors.push("name 不可為空");
   }
-  if(!data.tel|| !/^09\d{8}$/.test(data.tel)){
-    errors.push("電話必須是 09 開頭的 10 位數字")
+  if (!data.tel || !/^09\d{8}$/.test(data.tel)) {
+    errors.push("電話必須是 09 開頭的 10 位數字");
   }
-  if(!data.email|| !data.email.includes("@")){
-    errors.push("Email必須包含 @ 符號")
+  if (!data.email || !data.email.includes("@")) {
+    errors.push("Email必須包含 @ 符號");
   }
-  if(!data.address || data.address.trim().length === 0){
-    errors.push("地址不可為空")
+  if (!data.address || data.address.trim().length === 0) {
+    errors.push("地址不可為空");
   }
-  if(!['ATM', 'Credit Card', 'Apple Pay'].includes(data.payment)){
-    errors.push("付款方式必須是 'ATM', 'Credit Card', 'Apple Pay' 其中之一")
+  if (!["ATM", "Credit Card", "Apple Pay"].includes(data.payment)) {
+    errors.push("付款方式必須是 'ATM', 'Credit Card', 'Apple Pay' 其中之一");
   }
 
   return {
     isValid: errors.length === 0,
-    errors: errors
-  }
+    errors: errors,
+  };
 }
 
 /**
@@ -90,18 +90,18 @@ function validateOrderUser(data) {
  * - 不可大於 99
  */
 function validateCartQuantity(quantity) {
-  if(!Number.isInteger(quantity)){
-    return { isValid:false, error:"必須是整數" }
+  if (!quantity || !Number.isInteger(quantity)) {
+    return { isValid: false, error: "必須是整數" };
   }
-  if(quantity < 1){
-    return { isValid:false, error:"不可小於 1" }
+  if (quantity < 1) {
+    return { isValid: false, error: "不可小於 1" };
   }
-  if(quantity > 99){
-    return { isValid: false, error:"不可大於99" }
+  if (quantity > 99) {
+    return { isValid: false, error: "不可大於99" };
   }
   return {
     isValid: true,
-  }
+  };
 }
 
 /**
@@ -120,7 +120,7 @@ function validateCartQuantity(quantity) {
  *
  */
 function formatCurrency(amount) {
-  return `NT$ ${amount.toLocaleString("zh-TW")}`
+  return `NT$ ${amount.toLocaleString("zh-TW")}`;
 }
 
 module.exports = {
@@ -130,5 +130,5 @@ module.exports = {
   getDaysAgo,
   validateOrderUser,
   validateCartQuantity,
-  formatCurrency
+  formatCurrency,
 };
