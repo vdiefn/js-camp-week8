@@ -2,8 +2,18 @@
 // 訂單服務
 // ========================================
 
-const { createOrder, fetchOrders, updateOrderStatus, deleteOrder } = require('../api');
-const { validateOrderUser, formatDate, getDaysAgo, formatCurrency } = require('../utils');
+const {
+  createOrder,
+  fetchOrders,
+  updateOrderStatus,
+  deleteOrder,
+} = require("../api");
+const {
+  validateOrderUser,
+  formatDate,
+  getDaysAgo,
+  formatCurrency,
+} = require("../utils");
 
 /**
  * 建立新訂單
@@ -15,24 +25,24 @@ async function placeOrder(userInfo) {
   // 提示：先用 utils validateOrderUser() 驗證使用者資料，驗證失敗時回傳 { success: false, errors: [...] }
   // 驗證通過後，呼叫 createOrder() 建立訂單
   // 使用 try/catch 處理錯誤，回傳格式：{ success: true, data: ... } / { success: false, errors: [...] }
-  const validation = validateOrderUser(userInfo)
-  if(validation.errors.length > 0) {
+  const validation = validateOrderUser(userInfo);
+  if (validation.errors.length > 0) {
     return {
       success: false,
-      errors: validation.errors
-    }
+      errors: validation.errors,
+    };
   }
   try {
-    const res = await createOrder()
+    const res = await createOrder();
     return {
       success: true,
-      data: res
-    }
+      data: res,
+    };
   } catch (error) {
     return {
       success: false,
-      errors: error.message
-    }
+      errors: error.message,
+    };
   }
 }
 
@@ -44,13 +54,13 @@ async function getOrders() {
   // 請實作此函式
   // 提示：呼叫 fetchOrders() 取得訂單陣列並回傳
   try {
-    const res = await fetchOrders()
-    return res
+    const res = await fetchOrders();
+    return res;
   } catch (error) {
     return {
       success: false,
-      errors: error.message
-    }
+      errors: error.message,
+    };
   }
 }
 
@@ -62,13 +72,13 @@ async function getUnpaidOrders() {
   // 請實作此函式
   // 提示：呼叫 fetchOrders() 後，篩選出 paid 為 false 的訂單
   try {
-    const res = await fetchOrders()
-    return res.filter(item => !item.paid)
+    const res = await fetchOrders();
+    return res.filter((item) => !item.paid);
   } catch (error) {
     return {
       success: false,
-      errors: error.message
-    }
+      errors: error.message,
+    };
   }
 }
 
@@ -80,13 +90,13 @@ async function getPaidOrders() {
   // 請實作此函式
   // 提示：呼叫 fetchOrders() 後，篩選出 paid 為 true 的訂單
   try {
-    const res = await fetchOrders()
-    return res.filter(item => item.paid)
+    const res = await fetchOrders();
+    return res.filter((item) => item.paid);
   } catch (error) {
     return {
       success: false,
-      errors: error.message
-    }
+      errors: error.message,
+    };
   }
 }
 
@@ -101,16 +111,16 @@ async function updatePaymentStatus(orderId, isPaid) {
   // 提示：呼叫 updateOrderStatus()，使用 try/catch 處理錯誤
   // 回傳格式：{ success: true, data: ... } / { success: false, error: ... }
   try {
-    const res = await updateOrderStatus(orderId, isPaid)
+    const res = await updateOrderStatus(orderId, isPaid);
     return {
       success: true,
-      data: res
-    }
+      data: res,
+    };
   } catch (error) {
     return {
       success: false,
-      error: error.message
-    }
+      error: error.message,
+    };
   }
 }
 
@@ -124,16 +134,16 @@ async function removeOrder(orderId) {
   // 提示：呼叫 deleteOrder()，使用 try/catch 處理錯誤
   // 回傳格式：{ success: true, data: ... } / { success: false, error: ... }
   try {
-    const res = await deleteOrder(orderId)
+    const res = await deleteOrder(orderId);
     return {
       success: true,
-      data: res
-    }
+      data: res,
+    };
   } catch (error) {
     return {
       success: false,
-      error: error.message
-    }
+      error: error.message,
+    };
   }
 }
 
@@ -158,10 +168,10 @@ function formatOrder(order) {
   return {
     ...order,
     totalFormatted: formatCurrency(order.total),
-    paidText: order.paid? "已付款":"未付款",
+    paidText: order.paid ? "已付款" : "未付款",
     createdAt: formatDate(order.createdAt),
-    daysAgo: getDaysAgo(order.createdAt)
-  }
+    daysAgo: getDaysAgo(order.createdAt),
+  };
 }
 
 /**
@@ -190,25 +200,30 @@ function displayOrders(orders) {
   // 商品明細：
   //   - 產品名稱 x 2（產品數量）
   // ========================================
-  if(orders.length === 0) return "沒有訂單"
+  if (!orders || orders.length === 0) {
+    console.log("沒有訂單");
+    return;
+  }
 
-  const formattedOrder = orders.map(item => formatOrder(item))
+  const formattedOrder = orders.map((item) => formatOrder(item));
   formattedOrder.forEach((item, index) => {
-    if(index === 0) console.log(`訂單列表：\n========================================\n`)
-    console.log(`訂單 ${index+1}\n----------------------------------------\n訂單編號：${item.id}\n顧客姓名：${item.user.name}\n聯絡電話：${item.user.tel}\n寄送地址：${item.user.address}\n付款方式：${item.user.payment}\n訂單金額：${item.totalFormatted}\n付款狀態：${item.paidText}\n建立時間：${item.createdAt} (${item.daysAgo})\n----------------------------------------`)
-  })
+    if (index === 0)
+      console.log(`訂單列表：\n========================================\n`);
+    console.log(
+      `訂單 ${index + 1}\n----------------------------------------\n訂單編號：${item.id}\n顧客姓名：${item.user.name}\n聯絡電話：${item.user.tel}\n寄送地址：${item.user.address}\n付款方式：${item.user.payment}\n訂單金額：${item.totalFormatted}\n付款狀態：${item.paidText}\n建立時間：${item.createdAt} (${item.daysAgo})\n----------------------------------------`,
+    );
+  });
 
   formattedOrder.forEach((item, index) => {
-    if(index === 0) console.log(`商品明細：`)
-      item.products.forEach((i) => {
-      console.log(`${" ".repeat(4)}${i.title} x ${i.quantity}`)
-    })
+    if (index === 0) console.log(`商品明細：`);
+    item.products.forEach((i) => {
+      console.log(`${" ".repeat(4)}${i.title} x ${i.quantity}`);
+    });
 
-    if(index === orders.length -1) {
-      console.log(`========================================`)
+    if (index === orders.length - 1) {
+      console.log(`========================================`);
     }
-  })
-
+  });
 }
 
 module.exports = {
@@ -219,5 +234,5 @@ module.exports = {
   updatePaymentStatus,
   removeOrder,
   formatOrder,
-  displayOrders
+  displayOrders,
 };

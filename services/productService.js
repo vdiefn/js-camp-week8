@@ -106,6 +106,11 @@ function displayProducts(products) {
   //    原價：NT$ 1,000
   //    售價：NT$ 800 (8折)
   // ----------------------------------------
+  if (!products || products.length === 0) {
+    console.log("沒有產品");
+    return;
+  }
+
   products.forEach((item, index) => {
     if (index === 0) {
       console.log(`產品列表：\n----------------------------------------`);
